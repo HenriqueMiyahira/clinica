@@ -157,7 +157,7 @@ $result_pacientes = $stmt->get_result();
             } else if (usuarioTipo === 'Administrador') {
                 window.location.href = "menu_admin.php";
             } else if (usuarioTipo === 'Aluno') {
-                window.location.href = "menu_aluno.php";
+                window.location.href = "menu_usuario.php";
             } else {
                 alert("Erro: Tipo de usuário desconhecido.");
             }

@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['buscar'])) {
             } else if (usuarioTipo === 'Administrador') {
                 window.location.href = "menu_admin.php";
             } else if (usuarioTipo === 'Aluno') {
-                window.location.href = "menu_aluno.php";
+                window.location.href = "menu_usuario.php";
             } else {
                 alert("Erro: Tipo de usuário desconhecido.");
             }

@@ -272,7 +272,7 @@ $stmt->close();
             </tr>
             <tr>
                 <th>Inspeção/Palpação</th>
-                <td><?php echo $anamnese['inspecao_palpacoa']; ?></td>
+                <td><?php echo $anamnese['inspecao_palpacao']; ?></td>
             </tr>
             <tr>
                 <th>Avaliação da Amplitude de Movimento</th>
@@ -292,7 +292,7 @@ $stmt->close();
             </tr>
             <tr>
                 <th>Diagnóstico Cinesiológico Funcional</th>
-                <td><?php echo $anamnese['diagnostico_cinesiologico_funcional']; ?></td>
+                <td><?php echo $anamnese['diagnostico_cinesiologico']; ?></td>
             </tr>
             <tr>
                 <th>Objetivos Terapêuticos</th>
@@ -306,6 +306,17 @@ $stmt->close();
                 <th>Objetivos do Paciente</th>
                 <td><?php echo $anamnese['objetivos_paciente']; ?></td>
             </tr>
+            <tr>
+    <th>Imagem</th>
+    <td>
+        <?php if (!empty($anamnese['imagem'])): ?>
+            <img src="<?php echo $anamnese['imagem']; ?>" alt="Imagem da Anamnese" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 5px;">
+        <?php else: ?>
+            Nenhuma imagem disponível.
+        <?php endif; ?>
+    </td>
+</tr>
+
         </table>
         
         <button class="btn-voltar" onclick="window.location.href = 'exibir_anamnese.php';">Voltar</button>

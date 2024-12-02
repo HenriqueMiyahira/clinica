@@ -184,7 +184,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conduta_fisioterapeutica, $objetivos_paciente, $id_usuario
         
     ];
-   
     
     // Vincule os parâmetros
     $stmt->bind_param($tipos, ...$valores);
@@ -202,6 +201,140 @@ echo "Anamnese salva com sucesso!";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Anamnese</title>
+    <header>
+        <h1>Cadastro de Anamnese</h1>
+    </header>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px;
+            text-align: center;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            position: flex;
+            width: 100%;
+        }
+        main {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ddd;
+            margin: 20px 0;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+    }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input {
+            width: flex;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 20%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4CAF50;
+        }
+        .data-section {
+            margin-bottom: 20px;
+        }
+        .data-section h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        /* Estilo para os botões de seleção (estilo como no Tabagista) */
+        .select-group {
+            display: flex;
+            gap: 10px;
+        
+        }
+        .select-group input {
+            display: none;
+        }
+
+        .select-group label {
+            padding: 10px 20px;
+            border: 2px solid #ccc;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .select-group input:checked + label {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .select-group label:hover {
+            background-color: #ddd;
+        }
+
+        .select-group input:checked + label:hover {
+            background-color: #3e8e41;
+        }
+        .btn-detalhes {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn-detalhes:hover {
+            background-color: #45a049;
+        }
+         
+        .btn-voltar, .btn-anamnese {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
     <script>
         // Função para exibir ou ocultar campos de gestação e filhos
         function toggleGestacaoFields() {
@@ -268,47 +401,15 @@ echo "Anamnese salva com sucesso!";
         }
     </script>
     </script>
-    <style>
-        /* Estilo para os botões de seleção (estilo como no Tabagista) */
-        .select-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .select-group input {
-            display: none;
-        }
-
-        .select-group label {
-            padding: 10px 20px;
-            border: 2px solid #ccc;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .select-group input:checked + label {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .select-group label:hover {
-            background-color: #ddd;
-        }
-
-        .select-group input:checked + label:hover {
-            background-color: #3e8e41;
-        }
-    </style>
+    
 </head>
 <body>
-    
-
-   
 
     <form action="anamnese.php" method="POST" enctype="multipart/form-data">
-        <!-- Dados Pessoais -->
+    <h3>Dados Pessoais</h3>
+         <br>
         <label for="data_avaliacao">Data da Avaliação:</label>
+        <div class="login-container">
         <input type="date" name="data_avaliacao" value="<?php echo date('Y-m-d'); ?>" readonly><br><br>
 
         <label for="nome">Nome:</label>
@@ -683,7 +784,8 @@ echo "Anamnese salva com sucesso!";
         <textarea id="outras_informacoes" name="outras_informacoes" rows="4" cols="50"></textarea><br><br>
 
         <label for="diagnostico_cinesiologico">Diagnóstico Cinesiológico:</label><br>
-        <textarea id="diagnostico_cinesiologico" name="diagnostico_cinesiologico" rows="4" cols="50"></textarea><br><br>
+        <textarea id="diagnostico_cinesiologico" name="diagnostico_cinesiologico" rows="4" cols="50"></textarea><br>
+        <br>
 
         <label for="objetivos_terapeuticos">Objetivos Terapêuticos:</label><br>
         <textarea id="objetivos_terapeuticos" name="objetivos_terapeuticos" rows="4" cols="50"></textarea><br><br>
@@ -692,14 +794,42 @@ echo "Anamnese salva com sucesso!";
         <textarea id="conduta_fisioterapeutica" name="conduta_fisioterapeutica" rows="4" cols="50"></textarea><br><br>
 
         <label for="objetivos_paciente">Objetivos do Paciente:</label><br>
-        <textarea id="objetivos_paciente" name="objetivos_paciente" rows="4" cols="50"></textarea><br><br>
+        <textarea id="objetivos_paciente" name="objetivos_paciente" rows="4" cols="50"></textarea><br>
+        <br>
 
         <label for="id_usuario">ID do Usuário:</label>
         <input type="hidden" name="id_usuario" value="<?php echo $_SESSION['id_usuario']; ?>"><br><br>
 
-
+        
         <button type="submit">Salvar Anamnese</button>
+        <br>
+        <br>
+    </div>
     </form>
-    
+    <a href="javascript:void(0);" class="btn-voltar" onclick="voltarMenu()">Voltar</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Sua Instituição</p>
+    </footer>
+
+    <script>
+        // Função para redirecionar o usuário baseado no nível de acesso
+        function voltarMenu() {
+            // Obtém o tipo de usuário da sessão (verifique que você está armazenando isso corretamente)
+            var usuarioTipo = "<?php echo $_SESSION['nivel_acesso']; ?>";
+
+            // Redireciona conforme o tipo de usuário
+            if (usuarioTipo === 'Professor') {
+                window.location.href = "menu_prof.php";
+            } else if (usuarioTipo === 'Administrador') {
+                window.location.href = "menu_admin.php";
+            } else if (usuarioTipo === 'Aluno') {
+                window.location.href = "menu_usuario.php";
+            } else {
+                alert("Erro: Tipo de usuário desconhecido.");
+            }
+        }
+    </script>
 </body>
 </html>

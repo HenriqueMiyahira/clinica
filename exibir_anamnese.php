@@ -43,18 +43,23 @@ $stmt->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anamnese</title>
     <style>
+        /* Defina uma altura mínima para o body e permita o overflow vertical */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            min-height: 100vh;  /* Garantir que o body ocupe toda a altura da tela */
+            overflow-y: auto;  /* Permite rolagem vertical quando necessário */
         }
+
         header {
             background-color: #4CAF50;
             color: white;
             padding: 10px;
             text-align: center;
         }
+
         table {
             width: 80%;
             margin: 20px auto;
@@ -63,21 +68,26 @@ $stmt->close();
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         th, td {
             padding: 10px;
             border: 1px solid #ddd;
             text-align: center;
         }
+
         th {
             background-color: #4CAF50;
             color: white;
         }
+
         td {
             background-color: #f9f9f9;
         }
+
         .container {
             text-align: center;
         }
+
         footer {
             background-color: #4CAF50;
             color: white;
@@ -87,6 +97,7 @@ $stmt->close();
             bottom: 0;
             width: 100%;
         }
+
         .btn-voltar {
             padding: 10px 20px;
             background-color: #4CAF50;
@@ -136,10 +147,8 @@ $stmt->close();
     </div>
 
     <!-- Botão para voltar -->
-    
     <a href="javascript:void(0);" class="btn-voltar" onclick="voltarMenu()">Voltar</a>
     <a href="inserir_indicacao.php" class="btn-voltar">Inserir Indicações para o Paciente</a>
-    </div>
 
     <footer>
         <p>&copy; 2024 Sua Instituição</p>
@@ -157,7 +166,7 @@ $stmt->close();
             } else if (usuarioTipo === 'Administrador') {
                 window.location.href = "menu_admin.php";
             } else if (usuarioTipo === 'Aluno') {
-                window.location.href = "menu_aluno.php";
+                window.location.href = "menu_usuario.php";
             } else {
                 alert("Erro: Tipo de usuário desconhecido.");
             }
