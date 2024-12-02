@@ -1,6 +1,7 @@
 <?php
 // config.php
 session_start();
+
 $mysqli = new mysqli('localhost', 'root', '', 'clinica');
 
 // Verificando se houve erro na conexão
@@ -106,39 +107,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conduta_fisioterapeutica = isset($_POST['conduta_fisioterapeutica']) ? $_POST['conduta_fisioterapeutica'] : '';
     $objetivos_paciente = isset($_POST['objetivos_paciente']) ? $_POST['objetivos_paciente'] : '';
 
-    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-        $imagem = $_FILES['imagem'];
-        $nome_imagem = $imagem['name'];
-        $caminho_temporario = $imagem['tmp_name'];
-        $tamanho = $imagem['size'];
-    
-        // Verifique o tamanho e tipo da imagem
-        if ($tamanho <= 5000000) { // 5MB
-            $caminho_destino = 'uploads/' . $nome_imagem;
-            move_uploaded_file($caminho_temporario, $caminho_destino);
-        } else {
-            die("Arquivo inválido ou tamanho muito grande.");
-        }
-    } else {
-        $nome_imagem = null; // Ou defina um valor padrão.
-    }
-    
+    include('config.php'); // Incluir a conexão com o banco de dados
 
-    // Verificar se o arquivo é uma imagem e se o tamanho é adequado
-    if (in_array($imagem_tipo, ['image/jpeg', 'image/png', 'image/gif']) && $imagem_tamanho < 5000000) {
-        // Gerar um nome único para a imagem e movê-la para o diretório de uploads
-        $imagem_novo_nome = uniqid() . "_" . basename($imagem_nome);
-        $imagem_destino = "uploads/" . $imagem_novo_nome;
-
-        if (move_uploaded_file($imagem_tmp_name, $imagem_destino)) {
-            // A imagem foi movida com sucesso para o diretório "uploads"
-            echo "Imagem enviada com sucesso!<br>";
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+            $imagem = $_FILES['imagem'];
+            
+            // Exemplo: movendo a imagem para o diretório 'uploads'
+            $uploadDir = 'uploads/';
+            $uploadFile = $uploadDir . basename($imagem['name']);
+            
+            if (move_uploaded_file($imagem['tmp_name'], $uploadFile)) {
+                echo "Imagem enviada com sucesso!";
+            } else {
+                echo "Erro no upload da imagem. Código de erro: " . $imagem['error'];
+            }
         } else {
-            echo "Erro ao enviar a imagem.<br>";
+            echo "Nenhuma imagem foi enviada ou ocorreu um erro no envio.";
         }
-    } else {
-        echo "Arquivo inválido ou tamanho muito grande.<br>";
     }
+
+    
 
     // Calculando a idade com base na data de nascimento
     $data_nascimento_obj = new DateTime($data_nascimento);
@@ -173,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     )");
     
-    $tipos = str_repeat('s', 56) . str_repeat('i', 33) . 'dd';  // Ajustar conforme os tipos de dados
+    $tipos = str_repeat('s', 57) . str_repeat('i', 33) . 'dd';  // Ajustar conforme os tipos de dados
     $valores = [ 
         $data_avaliacao, $nome, $endereco, $telefone, $peso, $altura, $data_nascimento, $idade, $genero, 
         $estado_civil, $numero_gestacoes, $numero_filhos, $tipos_partos, $nivel_escolaridade, $profissao, 
@@ -192,8 +181,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $coluna_lombar_rotacao, $informacoes_adm, $forca_muscular, $perimetria, $sensibilidade, $testes_especiais, 
         $exames_complementares, $outras_informacoes, $diagnostico_cinesiologico, $objetivos_terapeuticos, 
         $conduta_fisioterapeutica, $objetivos_paciente, $id_usuario
+        
     ];
-    
+   
     
     // Vincule os parâmetros
     $stmt->bind_param($tipos, ...$valores);
@@ -311,8 +301,11 @@ echo "Anamnese salva com sucesso!";
     </style>
 </head>
 <body>
-    <h2>Cadastro de Anamnese</h2>
-    <form action="anamnese.php" method="POST">
+    
+
+   
+
+    <form action="anamnese.php" method="POST" enctype="multipart/form-data">
         <!-- Dados Pessoais -->
         <label for="data_avaliacao">Data da Avaliação:</label>
         <input type="date" name="data_avaliacao" value="<?php echo date('Y-m-d'); ?>" readonly><br><br>
@@ -567,8 +560,8 @@ echo "Anamnese salva com sucesso!";
     <textarea name="observacoes" id="observacoes" rows="4" cols="50"></textarea>
     <br><br>
 
-    <label for="imagem">Upload de Imagem:</label><br>
-    <input type="file" name="imagem" id="imagem" accept="image/*"><br><br>
+    <form action="anamnese.php" method="POST" enctype="multipart/form-data">
+    <input type="file" name="imagem" required>
 
     <label for="inspecao_palpacao">Inspeção e Palpação:</label><br>
         <textarea id="inspecao_palpacao" name="inspecao_palpacao" rows="4" cols="50"></textarea><br><br>
@@ -703,7 +696,9 @@ echo "Anamnese salva com sucesso!";
         <label for="id_usuario">ID do Usuário:</label>
         <input type="hidden" name="id_usuario" value="<?php echo $_SESSION['id_usuario']; ?>"><br><br>
 
+
         <button type="submit">Salvar Anamnese</button>
     </form>
+    
 </body>
 </html>
