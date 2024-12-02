@@ -36,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['botao']) && $_POST['b
                 } elseif ($usuario['nivel_acesso'] === "Administrador") {
                     header("Location: menu_admin.php");
                     exit; // Garante que o script seja finalizado após o redirecionamento
+                }   elseif ($usuario['nivel_acesso'] === "Professor") {
+                    header("Location: menu_prof.php");
+                    exit; // Garante que o script seja finalizado após o redirecionamento
                 }
             } else {
                 echo "Senha incorreta!";

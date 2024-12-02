@@ -107,6 +107,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             bottom: 0;
             width: 100%;
         }
+        .btn-voltar {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-voltar:hover {
+            background-color: #45a049;
+        }
+
     </style>
 </head>
 <body>
@@ -152,11 +163,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </tbody>
     </table>
 
-    <a href="menu_admin.php" class="button">Voltar para o Menu</a>
+    <a href="javascript:void(0);" class="btn-voltar" onclick="voltarMenu()">Voltar</a>
+    </div>
 
     <footer>
         <p>&copy; 2024 Sua Instituição</p>
     </footer>
+
+    <script>
+        // Função para redirecionar o usuário baseado no nível de acesso
+        function voltarMenu() {
+            // Obtém o tipo de usuário da sessão (verifique que você está armazenando isso corretamente)
+            var usuarioTipo = "<?php echo $_SESSION['nivel_acesso']; ?>";
+
+            // Redireciona conforme o tipo de usuário
+            if (usuarioTipo === 'Professor') {
+                window.location.href = "menu_prof.php";
+            } else if (usuarioTipo === 'Administrador') {
+                window.location.href = "menu_admin.php";
+            } else if (usuarioTipo === 'Aluno') {
+                window.location.href = "menu_aluno.php";
+            } else {
+                alert("Erro: Tipo de usuário desconhecido.");
+            }
+        }
+    </script>
 
 </body>
 </html>

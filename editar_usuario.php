@@ -108,10 +108,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #45a049;
         }
         .cancel-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
             background-color: #f44336;
+            
         }
         .cancel-button:hover {
+            padding: 10px 20px;
             background-color: #e53935;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
         footer {
             background-color: #4CAF50;

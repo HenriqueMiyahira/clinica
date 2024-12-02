@@ -79,7 +79,8 @@ if (!isset($_SESSION["id_usuario"])) {
     </header>
 
     <nav>
-        <a href="anamnese.php" class="menu-link">Ir para Anamnese</a>
+        <a href="anamnese.php" class="menu-link">Nova Anamnese</a>
+         <a href="exibir_anamnese.php" class="menu-link">Minhas Anamneses</a>
         <a href="buscar_aluno.php" class="menu-link">Buscar Aluno</a>
         <!-- Adicione outros links de navegação aqui conforme necessário -->
         <a href="logout.php" class="logout-button">Logout</a> <!-- Botão de logout -->

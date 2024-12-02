@@ -148,7 +148,7 @@ $stmtAnamneses->close();
         </div>
     </div>
 
-    <a href="buscar_usuario.php" class="back-button">Voltar</a>
+    <a href="buscar_aluno.php" class="back-button">Voltar</a>
 
 </body>
 </html>

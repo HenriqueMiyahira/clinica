@@ -78,9 +78,11 @@ if (!isset($_SESSION["id_usuario"]) || $_SESSION["nivel_acesso"] !== "Administra
 
     <nav>
         <a href="gerenciar_usuarios.php" class="menu-link">Gerenciar Usuários</a>
-        <a href="gerenciar_pacientes.php" class="menu-link">Gerenciar Pacientes</a>
+        <a href="gerenciar_pacientes.php" class="menu-link">Analisar Pacientes</a>
         <a href="relatorios.php" class="menu-link">Relatórios</a>
-        <a href="configuracoes.php" class="menu-link">Configurações</a>
+        <a href="buscar_aluno.php" class="menu-link">Buscar Aluno</a>
+        <a href="anamnese.php" class="menu-link">Nova Anamnese</a>
+        <a href="exibir_anamnese.php" class="menu-link">Minhas Anamneses</a>
         <!-- Adicione mais links de navegação conforme necessário -->
         <a href="logout.php" class="logout-button">Logout</a>
     </nav>

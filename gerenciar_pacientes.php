@@ -1,10 +1,9 @@
 <?php
-// Inicia a sessão para garantir que o usuário esteja logado
+// Inicia a sessão
 session_start();
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION["id_usuario"])) {
-    // Se não estiver logado, redireciona para a página de login
+// Verifica se o usuário está logado e é um administrador
+if (!isset($_SESSION["id_usuario"]) || $_SESSION["nivel_acesso"] !== 'Administrador') {
     header("Location: login.php");
     exit;
 }
@@ -12,25 +11,18 @@ if (!isset($_SESSION["id_usuario"])) {
 // Inclui o arquivo de configuração para conexão com o banco de dados
 include('config.php');
 
-// Pega o ID do usuário logado
-$id_usuario = $_SESSION["id_usuario"];
-
-// Consulta para buscar todas as anamneses associadas ao usuário logado
-$query = "SELECT a.id, a.data_avaliacao, a.nome FROM anamnese a WHERE a.id_usuario = ? ORDER BY a.nome DESC";
+// Consulta para exibir todos os pacientes
+$query = "SELECT * FROM anamnese";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $id_usuario);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Verifica se há anamneses
+// Verifica se há pacientes cadastrados
+$pacientes = [];
 if ($result->num_rows > 0) {
-    // Exibe as anamneses
-    $anamneses = [];
     while ($row = $result->fetch_assoc()) {
-        $anamneses[] = $row;
+        $pacientes[] = $row;
     }
-} else {
-    $anamneses = null; // Caso não haja anamnese
 }
 
 $stmt->close();
@@ -41,7 +33,7 @@ $stmt->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anamnese</title>
+    <title>Gerenciar Pacientes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -87,58 +79,73 @@ $stmt->close();
             bottom: 0;
             width: 100%;
         }
-        .btn-voltar {
+        .btn-detalhes {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn-detalhes:hover {
+            background-color: #45a049;
+        }
+         
+        .btn-voltar, .btn-anamnese {
             padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
-            border: none;
+            text-decoration: none;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .btn-voltar:hover {
-            background-color: #45a049;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Anamnese - Histórico de Consultas</h1>
+        <h1>Gerenciamento de Pacientes</h1>
     </header>
 
     <div class="container">
-        <h2>Suas Anamneses</h2>
-        
-        <?php if ($anamneses !== null): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Descrição</th>
-                        <th>Detalhes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($anamneses as $anamnese): ?>
+        <h2>Lista de Pacientes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Telefone</th>
+                    <th>Data Nascimento</th>
+                    <th>Idade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($pacientes)): ?>
+                    <?php foreach ($pacientes as $paciente): ?>
                         <tr>
-                            <td><?php echo date("d/m/Y", strtotime($anamnese['data_avaliacao'])); ?></td>
-                            <td><?php echo substr($anamnese['nome'], 0, 100); ?></td>
-                            <td><a href="detalhes_anamnese.php?id=<?php echo $anamnese['id']; ?>">Ver detalhes</a></td>
+                            <td><?php echo $paciente['nome']; ?></td>
+                            <td><?php echo $paciente['altura']; ?></td>
+                            <td><?php echo $paciente['endereco']; ?></td>
+                            <td><?php echo $paciente['telefone']; ?></td>
+                            <td><?php echo date("d/m/Y", strtotime($paciente['data_nascimento'])); ?></td>
+                            <td><?php echo $paciente['idade']; ?></td>
+                            <td>
+                                <a href="detalhes_paciente.php?id=<?php echo $paciente['nome']; ?>" class="btn-detalhes">Ver Detalhes</a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else: ?>
-            <p>Você ainda não tem anamneses registradas.</p>
-        <?php endif; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="7">Nenhum paciente encontrado.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
-
-    <!-- Botão para voltar -->
-    
     <a href="javascript:void(0);" class="btn-voltar" onclick="voltarMenu()">Voltar</a>
     <a href="inserir_indicacao.php" class="btn-voltar">Inserir Indicações para o Paciente</a>
+    
     </div>
 
     <footer>
