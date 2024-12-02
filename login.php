@@ -1,13 +1,11 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
 include('config.php');
 session_start(); // Inicia a sessão
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['botao']) && $_POST['botao'] === "Entrar") {
     // Verifica se os dados do formulário foram enviados
-    var_dump($_POST);  // Depuração
+    
 
     if (isset($_POST['nome']) && isset($_POST['senha'])) {
         // Recebe os dados do formulário
@@ -57,17 +55,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['botao']) && $_POST['b
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .login-container {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .login-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .login-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <form action="login.php" method="POST">
-        <label>Nome:</label>
-        <input type="text" name="nome" required><br>
 
-        <label>Senha:</label>
-        <input type="password" name="senha" required><br>
+    <header>
+        <h1>Login</h1>
+    </header>
 
-        <input type="submit" name="botao" value="Entrar">
-    </form>
+    <div class="login-container">
+        <form action="login.php" method="POST">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required placeholder="Digite seu nome">
+
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required placeholder="Digite sua senha">
+
+            <input type="submit" name="botao" value="Entrar">
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Sistema de Login</p>
+    </footer>
+
 </body>
 </html>
