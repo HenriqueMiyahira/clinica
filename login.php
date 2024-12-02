@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 include('config.php');
 session_start(); // Inicia a sessão
 
@@ -31,10 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['botao']) && $_POST['b
                 // Redireciona conforme o nível de acesso
                 if ($usuario['nivel_acesso'] === "Aluno") {
                     header("Location: menu_usuario.php");
-                    exit;
+                    exit; // Garante que o script seja finalizado após o redirecionamento
                 } elseif ($usuario['nivel_acesso'] === "Administrador") {
                     header("Location: menu_admin.php");
-                    exit;
+                    exit; // Garante que o script seja finalizado após o redirecionamento
                 }
             } else {
                 echo "Senha incorreta!";

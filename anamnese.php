@@ -1,6 +1,7 @@
 <?php
-// config.php
-session_start();
+
+require 'verifica.php';
+
 
 $mysqli = new mysqli('localhost', 'root', '', 'clinica');
 
