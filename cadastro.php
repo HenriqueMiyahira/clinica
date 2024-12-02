@@ -78,6 +78,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             bottom: 0;
             width: 100%;
         }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container a {
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        .button-container a:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -105,6 +120,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <button type="submit">Cadastrar</button>
         </form>
+    </div>
+    <div class="button-container">
+        <a href="login.php">Ja é Cadastrado Faça Login</a> <!-- Redireciona para a página de cadastro -->
+        <a href="login_paciente.php">Entrar como Paciente</a> <!-- Redireciona para a página de login do paciente -->
     </div>
 
     <footer>

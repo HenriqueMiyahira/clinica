@@ -5,8 +5,6 @@ session_start(); // Inicia a sessão
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['botao']) && $_POST['botao'] === "Entrar") {
     // Verifica se os dados do formulário foram enviados
-    
-
     if (isset($_POST['nome']) && isset($_POST['senha'])) {
         // Recebe os dados do formulário
         $nome = $_POST['nome'];
@@ -36,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['botao']) && $_POST['b
                 } elseif ($usuario['nivel_acesso'] === "Administrador") {
                     header("Location: menu_admin.php");
                     exit; // Garante que o script seja finalizado após o redirecionamento
-                }   elseif ($usuario['nivel_acesso'] === "Professor") {
+                } elseif ($usuario['nivel_acesso'] === "Professor") {
                     header("Location: menu_prof.php");
                     exit; // Garante que o script seja finalizado após o redirecionamento
                 }
@@ -106,6 +104,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['botao']) && $_POST['b
             bottom: 0;
             width: 100%;
         }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container a {
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        .button-container a:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -124,6 +137,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['botao']) && $_POST['b
 
             <input type="submit" name="botao" value="Entrar">
         </form>
+    </div>
+
+    <div class="button-container">
+        <a href="cadastro.php">Cadastrar Novo Usuário</a> <!-- Redireciona para a página de cadastro -->
+        <a href="login_paciente.php">Entrar como Paciente</a> <!-- Redireciona para a página de login do paciente -->
     </div>
 
     <footer>
