@@ -85,7 +85,7 @@ if (!isset($_SESSION["id_usuario"])) {
     </nav>
 
     <footer>
-        <p>&copy; 2024 Sua Instituição</p>
+        <p>&copy; 2024 UNICURITIBA</p>
     </footer>
 
 </body>
